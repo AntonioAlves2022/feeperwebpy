@@ -1,0 +1,98 @@
+Django==4.2.3
+djangorestframework==3.14.0
+mysqlclient==2.2.0
+sqlalchemy==2.0.19
+tensorflow==2.12.0
+openai==0.27.8
+gunicorn==20.1.0
+celery==5.3.1
+redis==4.5.4
+python-jose==3.3.0
+django-cors-headers==4.1.0
+PyJWT==2.7.0
+requests==2.31.0
+```
+
+5. Criar script de inicialização:
+<antArtifact identifier="start-script" type="application/vnd.ant.code" language="bash" title="Script de Inicialização do Projeto">
+#!/bin/bash
+
+# Comandos para configuração e inicialização do projeto
+
+# Criar ambiente virtual
+python3 -m venv venv
+source venv/bin/activate
+
+# Instalar dependências
+pip install -r requirements.txt
+
+# Configurar banco de dados
+python manage.py makemigrations
+python manage.py migrate
+
+# Criar superusuário (opcional)
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@example.com', 'adminpassword')" | python manage.py shell
+
+# Iniciar aplicação
+python manage.py runserver
+```
+
+Comandos para Execução:
+
+```bash
+# Construir e iniciar containers
+docker-compose build
+docker-compose up -d
+
+# Verificar status dos containers
+docker-compose ps
+
+# Parar containers
+docker-compose down
+
+# Executar migrações
+docker-compose exec web python manage.py migrate
+
+# Ver logs
+docker-compose logs web
+
+# Acessar shell do container web
+docker-compose exec web bash
+```
+
+Configurações Adicionais Recomendadas:
+
+1. Variáveis de Ambiente
+- Crie um arquivo `.env` para gerenciar variáveis sensíveis
+- Não commite arquivos com senhas no repositório
+
+2. Segurança
+- Use `django-environ` para gerenciar configurações
+- Gere chaves secretas seguras
+- Configure HTTPS para produção
+
+3. Volumes
+- Configure volumes persistentes para dados
+- Faça backups regulares do banco de dados
+
+4. Monitoramento
+- Integre ferramentas como Prometheus e Grafana
+- Configure logging centralizado
+
+5. CI/CD
+- Adicione GitHub Actions ou GitLab CI para build e deploy
+- Faça testes automatizados
+
+Arquivos Finais Necessários:
+- Dockerfile
+- docker-compose.yml
+- requirements.txt
+- nginx/nginx.conf
+- .env (gitignore)
+
+Próximos Passos:
+- Implementar testes
+- Configurar CI/CD
+- Adicionar documentação
+
+Deseja que eu detalhe algum aspecto específico da configuração Docker?
