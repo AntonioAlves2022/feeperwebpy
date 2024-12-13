@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_frameworks',
+    'rest_framework',
+    'core',
     'students',
     'tutors',
     'domain',
@@ -85,7 +86,10 @@ DATABASES = {
         'USER':'root',
         'PASSWORD':'231281',
         'HOST':'localhost',
-        'PORT':'3306'
+        'PORT':'3306',
+        'OPTIONS':{
+            'init_command': "SET sql_mode ='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
